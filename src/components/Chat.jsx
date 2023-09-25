@@ -45,7 +45,7 @@ const Chat = ({ chatState, setChatState }) => {
     }
     setIsTyping(true);
     fetchAnswer(latestUserQuestion);
-  }, [latestUserQuestion]);
+  }, [latestUserQuestion, fetchAnswer]);
 
   useEffect(() => {
     const latestChat = chatState[chatState.length - 1];
