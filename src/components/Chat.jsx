@@ -5,34 +5,7 @@ const Chat = ({ chatState, setChatState }) => {
   const [isTyping, setIsTyping] = useState(false);
   const [latestUserQuestion, setLatestUserQuestion] = useState("");
   const chatContainerRef = useRef(null);
-  const fetchAnswer = async (question) => {
-    const answerResponse = await fetch(
-      `https://alfred-ai-1lfr.onrender.com/api/v1/chat`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          query_text: question,
-        }),
-      }
-    );
 
-    const answer = await answerResponse.json();
-
-    setChatState((state) => [
-      ...state,
-      {
-        type: "bot",
-        content: answer.data,
-      },
-    ]);
-
-    setIsTyping(false);
-
-    scrollToBottom();
-  };
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
@@ -40,12 +13,40 @@ const Chat = ({ chatState, setChatState }) => {
     }
   };
   useEffect(() => {
+    const fetchAnswer = async (question) => {
+      const answerResponse = await fetch(
+        `https://alfred-ai-1lfr.onrender.com/api/v1/chat`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            query_text: question,
+          }),
+        }
+      );
+
+      const answer = await answerResponse.json();
+
+      setChatState((state) => [
+        ...state,
+        {
+          type: "bot",
+          content: answer.data,
+        },
+      ]);
+
+      setIsTyping(false);
+
+      scrollToBottom();
+    };
     if (!latestUserQuestion) {
       return;
     }
     setIsTyping(true);
     fetchAnswer(latestUserQuestion);
-  }, [latestUserQuestion, fetchAnswer]);
+  }, [latestUserQuestion, setChatState]);
 
   useEffect(() => {
     const latestChat = chatState[chatState.length - 1];
