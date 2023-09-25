@@ -1,0 +1,29 @@
+.bot_chat {
+  background-color: #232323;
+  color: #fff;
+  border-radius: 2rem 2rem 2rem 0;
+}
+
+.user_chat {
+  background-color: rgb(8 152 37);
+  color: #fff;
+  border-radius: 2rem 2rem 0 2rem;
+  text-align: right;
+  justify-self: flex-end;
+  align-self: end;
+}
+
+.message {
+  margin-bottom: 1.5rem;
+  display: inline;
+  width: fit-content;
+  padding: 0.5rem 1rem;
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
